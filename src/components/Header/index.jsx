@@ -2,10 +2,6 @@ import styled from "styled-components";
 import { useEffect, useState, useCallback } from "react";
 import { FaBars } from "react-icons/fa";
 
-/* helper: evita 2 interpolations no @media */
-const betweenSmMd = (p) =>
-  `(min-width: ${p.theme.bp.sm}) and (max-width: ${p.theme.bp.md})`;
-
 const HeaderWrap = styled.header`
   padding: 24px 0;
   background: ${({ theme }) => theme.colors.panel};
@@ -14,17 +10,7 @@ const HeaderWrap = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
-
-  @media (max-width: ${(p) => p.theme.bp.sm}) {
-    padding: 20px 30px;
-    position: relative;
-  }
-
-  @media ${betweenSmMd} {
-    padding: 25px 30px;
-    position: relative;
-  }
+  z-index: ${({ theme }) => theme.z.header};
 `;
 
 const HeaderContainer = styled.div`
@@ -32,7 +18,6 @@ const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   max-width: 1240px;
-  width: 100%;
   margin: 0 auto;
   padding: 0 20px;
 `;
@@ -40,9 +25,8 @@ const HeaderContainer = styled.div`
 const Title = styled.a`
   font-size: 32px;
   font-weight: bold;
-  span {
-    color: ${({ theme }) => theme.colors.text};
-  }
+  color: #fff;
+  text-decoration: none;
 `;
 
 const Nav = styled.nav`
@@ -53,7 +37,6 @@ const Nav = styled.nav`
 const NavList = styled.ul`
   display: flex;
   gap: 20px;
-  align-items: center;
   list-style: none;
 
   a {
@@ -62,67 +45,38 @@ const NavList = styled.ul`
     letter-spacing: 2px;
     font-weight: 700;
     padding: 8px 12px;
-    border-radius: 8px;
-    text-decoration: none;
+    border-radius: ${({ theme }) => theme.radius.md};
     color: ${({ theme }) => theme.colors.text};
-    z-index: 1;
-    overflow: hidden;
+    transition: all 0.3s ease;
 
-    /* fundo preto com borda arredondada que “desce” no hover */
     &::after {
       content: "";
       position: absolute;
       inset: 0;
+      border-radius: ${({ theme }) => theme.radius.md};
+      opacity: 0;
+      transition: opacity 0.3s, height 0.3s;
       background: ${({ theme }) => theme.colors.panelDark};
-      border-radius: 8px;
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 0.28s ease;
+      height: 1px;
       z-index: -1;
     }
-    &:hover::after,
-    &:focus-visible::after {
-      transform: scaleY(1);
+    &:hover::after {
+      opacity: 1;
+      height: 100%;
     }
-  }
-
-  /* drawer até sm */
-  @media (max-width: ${(p) => p.theme.bp.sm}) {
-    position: absolute;
-    top: 66px;
-    right: ${({ $open }) => ($open ? "0" : "-160px")};
-    background: ${({ theme }) => theme.colors.panel};
-    display: grid;
-    width: 148px;
-    padding: 15px;
-    border-radius: 0 0 5px 5px;
-    box-shadow: ${({ theme }) => theme.shadow};
-    gap: 24px;
-    transition: right 0.35s ease-in-out;
-  }
-
-  /* drawer entre sm e md (1 interpolação só!) */
-  @media ${betweenSmMd} {
-    position: absolute;
-    top: 80px;
-    right: ${({ $open }) => ($open ? "0" : "-180px")};
-    background: ${({ theme }) => theme.colors.panel};
-    display: grid;
-    width: 178px;
-    padding: 15px;
-    border-radius: 0 0 5px 5px;
-    box-shadow: ${({ theme }) => theme.shadow};
-    gap: 32px;
-    transition: right 0.35s ease-in-out;
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 `;
 
 const Burger = styled(FaBars)`
   display: none;
   cursor: pointer;
-  @media (max-width: ${(p) => p.theme.bp.md}) {
+  @media (max-width: ${({ theme }) => theme.bp.md}) {
     display: block;
     font-size: 24px;
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -130,8 +84,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const onNavClick = useCallback((e) => {
-    const a = e.target.closest("a");
-    if (a) setIsOpen(false);
+    if (e.target.closest("a")) setIsOpen(false);
   }, []);
 
   useEffect(() => {
@@ -142,22 +95,13 @@ export default function Header() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  useEffect(() => {
-    console.log("Header montado!");
-  }, []);
-
   return (
     <HeaderWrap id="inicio">
       <HeaderContainer>
-        <Title href="#inicio">
-          <span>&lt; Pedro Passos /&gt;</span>
-        </Title>
+        <Title href="#inicio">&lt; Pedro Passos /&gt;</Title>
+
         <Nav>
-          <NavList
-            $open={isOpen}
-            onClick={onNavClick}
-            className="primary-navgation"
-          >
+          <NavList $open={isOpen} onClick={onNavClick}>
             <li>
               <a href="#inicio">Início</a>
             </li>
