@@ -6,7 +6,6 @@ import artigos from "../../assets/images/projeto_artigos.png";
 import alphafit from "../../assets/images/projeto_alphafit.png";
 import advocacia from "../../assets/images/projeto_advocacia.png";
 
-
 const Section = styled.section`
   background: ${({ theme }) => theme.colors.panel};
   color: ${({ theme }) => theme.colors.text};
@@ -25,11 +24,14 @@ const TitleWrap = styled.div`
 
   h2 {
     font-size: 32px;
-    font-weight: 700;
     background: linear-gradient(to right, #58a6ff, #d2a8ff);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    border-bottom: 3px solid ${({ theme }) => theme.colors.primary};
+    display: inline-block;
+    padding-bottom: 6px;
+    border-radius: 6px;
   }
 
   h3 {
@@ -109,12 +111,11 @@ const CardInner = styled.div`
   }
 `;
 
-
 /* Modal */
 const Backdrop = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.6);
+  background: rgba(0, 0, 0, 0.6);
   display: ${({ $open }) => ($open ? "flex" : "none")};
   align-items: center;
   justify-content: center;
@@ -175,7 +176,7 @@ const Modal = styled.div`
 
   .meta {
     font-size: 14px;
-    opacity: .9;
+    opacity: 0.9;
     line-height: 1.6;
   }
 
@@ -196,7 +197,7 @@ const Modal = styled.div`
       border: 2px solid ${({ theme }) => theme.colors.primary};
       background: ${({ theme }) => theme.colors.panel};
       color: ${({ theme }) => theme.colors.text};
-      transition: background .25s ease, color .25s ease, border .25s ease;
+      transition: background 0.25s ease, color 0.25s ease, border 0.25s ease;
 
       &:hover {
         background: ${({ theme }) => theme.colors.secondary};
@@ -214,8 +215,7 @@ const projects = [
   {
     title: "Menu Digital",
     img: menuDigital,
-    desc:
-      "Site de menu para restaurante/lanchonete que envia pedidos direto para o WhatsApp.",
+    desc: "Site de menu para restaurante/lanchonete que envia pedidos direto para o WhatsApp.",
     techs: "Git, JavaScript, jQuery, Bootstrap, CSS3, HTML5",
     code: "https://github.com/PedroPassos081/menu_virtual",
     demo: "https://menu-virtual.vercel.app/",
@@ -223,8 +223,7 @@ const projects = [
   {
     title: "Jogo da Memória - Hora de Aventura",
     img: jogoMemoria,
-    desc:
-      "Acesse após inserir um nickname (≥ 3 chars). Encontre os 10 pares para vencer.",
+    desc: "Acesse após inserir um nickname (≥ 3 chars). Encontre os 10 pares para vencer.",
     techs: "Git, CSS3, JavaScript, HTML5",
     code: "https://github.com/PedroPassos081/jogo-da-memoria",
     demo: "https://jogo-da-memoria-psi-ashy.vercel.app/",
@@ -232,8 +231,7 @@ const projects = [
   {
     title: "Projeto Pomodoro",
     img: pomodoro,
-    desc:
-      "Timer Pomodoro: 25 minutos de foco, 5 de pausa, com pausa longa a cada 4 ciclos.",
+    desc: "Timer Pomodoro: 25 minutos de foco, 5 de pausa, com pausa longa a cada 4 ciclos.",
     techs: "Git, JavaScript, CSS3, HTML5",
     code: "https://github.com/PedroPassos081/pomodoro",
     demo: "https://pomodoro-tau-dusky.vercel.app/",
@@ -241,8 +239,7 @@ const projects = [
   {
     title: "Página com artigos",
     img: artigos,
-    desc:
-      "Página criada para estudos com artigos de tecnologia e estrutura de blog.",
+    desc: "Página criada para estudos com artigos de tecnologia e estrutura de blog.",
     techs: "React, JavaScript, Git",
     code: "https://github.com/PedroPassos081/ola-mundo",
     demo: "https://ola-mundo-phi-liard.vercel.app/",
@@ -250,8 +247,7 @@ const projects = [
   {
     title: "Landing Page AlphaFit",
     img: alphafit,
-    desc:
-      "Quase um clone da Smart Fit, para praticar HTML & CSS com layout responsivo.",
+    desc: "Quase um clone da Smart Fit, para praticar HTML & CSS com layout responsivo.",
     techs: "HTML5, CSS3",
     code: "https://github.com/PedroPassos081/Alpha-Fit",
     demo: "https://alpha-fit-pedropassos081s-projects.vercel.app/",
@@ -259,8 +255,7 @@ const projects = [
   {
     title: "Landing Page Advocacia",
     img: advocacia,
-    desc:
-      "Landing page baseada em layout feito no Figma por mim.",
+    desc: "Landing page baseada em layout feito no Figma por mim.",
     techs: "Git, HTML5, CSS3",
     code: "https://github.com/PedroPassos081/site-escritorio-advocacia-",
     demo: "https://site-escritorio-advocacia.vercel.app/#",
@@ -305,7 +300,9 @@ function Projects() {
             <Modal>
               <div className="header">
                 <h3>{current.title}</h3>
-                <button className="close" onClick={() => setOpen(false)}>×</button>
+                <button className="close" onClick={() => setOpen(false)}>
+                  ×
+                </button>
               </div>
 
               <div className="preview">
@@ -314,7 +311,9 @@ function Projects() {
 
               <div className="meta">
                 <p>{current.desc}</p>
-                <p><strong>Tecnologias:</strong> {current.techs}</p>
+                <p>
+                  <strong>Tecnologias:</strong> {current.techs}
+                </p>
               </div>
 
               <div className="links">
@@ -332,4 +331,4 @@ function Projects() {
     </Section>
   );
 }
-export default Projects
+export default Projects;

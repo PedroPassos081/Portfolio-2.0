@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import {
-    SiHtml5,
-    SiCss3,
-    SiJavascript,
-    SiTypescript,
-    SiReact,
-    SiNodedotjs,
-    SiGit,
-    SiGithub,
-    SiSass,
-    SiNextdotjs
+  SiHtml5,
+  SiCss3,
+  SiJavascript,
+  SiTypescript,
+  SiReact,
+  SiNodedotjs,
+  SiGit,
+  SiGithub,
+  SiSass,
+  SiNextdotjs,
 } from "react-icons/si";
 
 const Section = styled.section`
@@ -76,10 +76,10 @@ const CardInner = styled.div`
   align-items: center;
   gap: 10px;
 
-  transition: transform .15s ease, box-shadow .2s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   }
 `;
 
@@ -92,46 +92,44 @@ const IconWrap = styled.div`
 const Label = styled.span`
   font-size: 14px;
   letter-spacing: 1px;
-  opacity: .95;
+  opacity: 0.95;
 `;
 
 const skills = [
-    { label: "HTML5", icon: SiHtml5 },
-    { label: "CSS3", icon: SiCss3 },
-    { label: "Sass", icon: SiSass },
-    { label: "JavaScript", icon: SiJavascript },
-    { label: "TypeScript", icon: SiTypescript },
-    { label: "React", icon: SiReact },
-    { label: "Next.js", icon: SiNextdotjs },
-    { label: "Node.js", icon: SiNodedotjs },
-    { label: "Git", icon: SiGit },
-    { label: "GitHub", icon: SiGithub },
+  { label: "HTML5", icon: SiHtml5 },
+  { label: "CSS3", icon: SiCss3 },
+  { label: "Sass", icon: SiSass },
+  { label: "JavaScript", icon: SiJavascript },
+  { label: "TypeScript", icon: SiTypescript },
+  { label: "React", icon: SiReact },
+  { label: "Next.js", icon: SiNextdotjs },
+  { label: "Node.js", icon: SiNodedotjs },
+  { label: "Git", icon: SiGit },
+  { label: "GitHub", icon: SiGithub },
 ];
 
 export default function Skills() {
-    return (
-        <Section id="habilidades">
-            <Container>
-                <TitleWrap>
-                    <h2>Habilidades</h2>
-                    <h3>Conhecimentos Técnicos</h3>
-                </TitleWrap>
+  return (
+    <Section id="habilidades">
+      <Container>
+        <TitleWrap>
+          <h2>Habilidades</h2>
+          <h3>Conhecimentos Técnicos</h3>
+        </TitleWrap>
 
-                <Grid data-aos="flip-up" data-aos-duration="1200">
-                    {skills.map((skill) => (
-                        <CardOuter key={skill.label}>
-                            <CardInner>
-                                <IconWrap>
-                                    <skill.icon aria-hidden="true" />
-                                </IconWrap>
-                                <Label>{skill.label}</Label>
-                            </CardInner>
-                        </CardOuter>
-                    ))}
-                </Grid>
-
-
-            </Container>
-        </Section>
-    );
+        <Grid data-aos="flip-up" data-aos-duration="1200">
+          {skills.map((skill) => (
+            <CardOuter key={skill.label}>
+              <CardInner>
+                <IconWrap>
+                  <skill.icon aria-hidden="true" />
+                </IconWrap>
+                <Label>{skill.label}</Label>
+              </CardInner>
+            </CardOuter>
+          ))}
+        </Grid>
+      </Container>
+    </Section>
+  );
 }
