@@ -36,7 +36,6 @@ const TitleWrap = styled.div`
     color: ${({ theme }) => theme.colors.text};
     opacity: 0.9;
   }
-
 `;
 
 /* Borda gradiente externa */
@@ -87,42 +86,42 @@ const Text = styled.div`
 `;
 
 export default function About() {
-    return (
-        <Section id="sobre">
-            <Container>
-                <TitleWrap>
-                    <h2>Sobre Mim</h2>
-                    <h3>Apresentação Pessoal</h3>
-                </TitleWrap>
+  return (
+    <Section id="sobre">
+      <Container>
+        <TitleWrap>
+          <h2>Sobre Mim</h2>
+          <h3>Apresentação Pessoal</h3>
+        </TitleWrap>
 
-                <CardOuter data-aos="flip-up" data-aos-duration="1500">
-                    <CardInner>
-                        <Photo>
-                            <img src={fotoPerfil} alt="Pedro Passos" />
-                        </Photo>
+        <CardOuter data-aos="flip-up" data-aos-duration="1500">
+          <CardInner>
+            <Photo>
+              <img src={fotoPerfil} alt="Pedro Passos" />
+            </Photo>
 
-                        <Text>
-                            <p>
-                                Sou formado em Análise e Desenvolvimento de Sistemas (UNIFG) e
-                                pós-graduando em Desenvolvimento Fullstack (FIAP).
-                            </p>
-                            <p>
-                                Construí uma base sólida em algoritmos e lógica de programação,
-                                que me dá segurança para trabalhar em diferentes cenários de
-                                desenvolvimento. Hoje, meu foco está em React, Next.js, Node.js
-                                e TypeScript, tecnologias que aplico em projetos para criar
-                                soluções escaláveis, bem estruturadas e alinhadas às melhores
-                                práticas do mercado.
-                            </p>
-                            <p>
-                                Sou apaixonado por tecnologia e busco constantemente evoluir
-                                como desenvolvedor, unindo aprendizado contínuo e prática em
-                                cada projeto que realizo.
-                            </p>
-                        </Text>
-                    </CardInner>
-                </CardOuter>
-            </Container>
-        </Section>
-    );
+            <Text>
+              <p>
+                Sou formado em Análise e Desenvolvimento de Sistemas (UNIFG) e
+                pós-graduando em Desenvolvimento Fullstack (FIAP).
+              </p>
+              <p>
+                Construí uma base sólida em algoritmos e lógica de programação,
+                que me dá segurança para trabalhar em diferentes cenários de
+                desenvolvimento. Hoje, meu foco está em React, Next.js, Node.js
+                e TypeScript, tecnologias que aplico em projetos para criar
+                soluções escaláveis, bem estruturadas e alinhadas às melhores
+                práticas do mercado.
+              </p>
+              <p>
+                Sou apaixonado por tecnologia e busco constantemente evoluir
+                como desenvolvedor, unindo aprendizado contínuo e prática em
+                cada projeto que realizo.
+              </p>
+            </Text>
+          </CardInner>
+        </CardOuter>
+      </Container>
+    </Section>
+  );
 }
