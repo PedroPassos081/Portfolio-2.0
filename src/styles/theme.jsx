@@ -56,4 +56,4 @@ const lightTheme = {
 };
 
 export default darkTheme;
-export { lightTheme };
+export { lightTheme, common };

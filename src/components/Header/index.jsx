@@ -1,9 +1,10 @@
+// src/components/Header/index.jsx
 import styled from "styled-components";
 import { useEffect, useState, useCallback } from "react";
 import { FaBars } from "react-icons/fa";
 
 const HeaderWrap = styled.header`
-  padding: 24px 0;
+  padding: 20px 0;
   background: ${({ theme }) => theme.colors.panel};
   color: ${({ theme }) => theme.colors.text};
   box-shadow: ${({ theme }) => theme.shadow};
@@ -23,9 +24,12 @@ const HeaderContainer = styled.div`
 `;
 
 const Title = styled.a`
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
-  color: #fff;
+  background: ${({ theme }) => theme.colors.text};
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   text-decoration: none;
 `;
 
@@ -41,7 +45,7 @@ const NavList = styled.ul`
 
   a {
     position: relative;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 2px;
     font-weight: 700;
     padding: 8px 12px;
@@ -68,14 +72,29 @@ const NavList = styled.ul`
       color: ${({ theme }) => theme.colors.primary};
     }
   }
+
+  /* Versão mobile */
+  @media (max-width: ${({ theme }) => theme.bp.md}) {
+    position: absolute;
+    top: 64px;
+    right: ${({ $open }) => ($open ? "0" : "-200px")};
+    flex-direction: column;
+    background: ${({ theme }) => theme.colors.panel};
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: ${({ theme }) => theme.shadow};
+    gap: 16px;
+    transition: right 0.3s ease-in-out;
+  }
 `;
 
 const Burger = styled(FaBars)`
   display: none;
   cursor: pointer;
+
   @media (max-width: ${({ theme }) => theme.bp.md}) {
     display: block;
-    font-size: 24px;
+    font-size: 26px;
     color: ${({ theme }) => theme.colors.primary};
   }
 `;
