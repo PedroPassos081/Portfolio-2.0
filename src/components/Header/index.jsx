@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import { useEffect, useState, useCallback } from "react";
 import { FaBars } from "react-icons/fa";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const HeaderWrap = styled.header`
   padding: 20px 0;
@@ -26,16 +27,15 @@ const HeaderContainer = styled.div`
 const Title = styled.a`
   font-size: 28px;
   font-weight: bold;
-  background: ${({ theme }) => theme.colors.text};
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: ${({ theme }) =>
+    theme.colors.text}; /* <- simples, funciona nos 2 temas */
   text-decoration: none;
 `;
 
 const Nav = styled.nav`
   display: flex;
   align-items: center;
+  gap: 10px; /* espaço com o toggle/burger */
 `;
 
 const NavList = styled.ul`
@@ -77,7 +77,7 @@ const NavList = styled.ul`
   @media (max-width: ${({ theme }) => theme.bp.md}) {
     position: absolute;
     top: 64px;
-    right: ${({ $open }) => ($open ? "0" : "-200px")};
+    right: ${({ $open }) => ($open ? "0" : "-220px")};
     flex-direction: column;
     background: ${({ theme }) => theme.colors.panel};
     padding: 20px;
@@ -99,7 +99,33 @@ const Burger = styled(FaBars)`
   }
 `;
 
-export default function Header() {
+/* Botão de alternância de tema */
+const ThemeToggle = styled.button`
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.panel};
+  color: ${({ theme }) => theme.colors.text};
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.secondary};
+    border-color: ${({ theme }) => theme.colors.secondary};
+    color: #fff;
+  }
+  @media (max-width: ${({ theme }) => theme.bp.md}) {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+`;
+
+export default function Header({ onToggleTheme, currentMode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const onNavClick = useCallback((e) => {
@@ -137,6 +163,12 @@ export default function Header() {
               <a href="#contato">Contato</a>
             </li>
           </NavList>
+
+          {/* Toggle de tema */}
+          <ThemeToggle onClick={onToggleTheme} aria-label="Alternar tema">
+            {currentMode === "dark" ? <FaSun /> : <FaMoon />}
+          </ThemeToggle>
+
           <Burger
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Abrir menu"
