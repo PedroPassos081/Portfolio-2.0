@@ -1,10 +1,6 @@
-import { useState } from "react";
+// src/components/Contact/index.jsx
 import styled from "styled-components";
-
-// ====== SEUS LINKS/EMAIL ======
-const EMAIL = "pedro.passos081@gmail.com";
-const LINKEDIN = "https://www.linkedin.com/in/pedro-passos081/";
-const GITHUB = "https://github.com/PedroPassos081";
+import { useState } from "react";
 
 const Section = styled.section`
   background: ${({ theme }) => theme.colors.bg};
@@ -59,7 +55,7 @@ const GradientBorder = styled.div`
 `;
 
 const Card = styled.div`
-  background: ${({ theme }) => theme.colors.panel};
+  background: ${({ theme }) => theme.colors.bg};
   border-radius: 16px;
   padding: 24px;
 `;
@@ -82,7 +78,7 @@ const Field = styled.div`
 
   input,
   textarea {
-    background: ${({ theme }) => theme.colors.bg};
+    background: ${({ theme }) => theme.colors.panel};
     color: ${({ theme }) => theme.colors.text};
     border: 2px solid ${({ theme }) => theme.colors.panelDark || "#1a1a1a"};
     border-radius: 10px;
@@ -138,7 +134,6 @@ const Notice = styled.p`
   font-size: 14px;
   margin-top: 6px;
   opacity: 0.95;
-
   &.ok {
     color: #39d353;
   }
@@ -184,45 +179,76 @@ export default function Contact() {
     setMsg({ type: "", text: "" });
 
     const form = e.currentTarget;
-    const data = new FormData(form);
 
-    // Honeypot anti-spam: campo escondido; se preenchido, descarta
-    if (data.get("website")) {
+    // Honeypot anti-spam (campo oculto)
+    const bot = form.website?.value;
+    if (bot) {
       setMsg({ type: "err", text: "Falha no envio." });
       return;
     }
 
-    // Validações simples
-    const name = data.get("name")?.toString().trim();
-    const email = data.get("email")?.toString().trim();
-    const message = data.get("message")?.toString().trim();
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+
     if (!name || !email || !message) {
       setMsg({ type: "err", text: "Preencha todos os campos." });
       return;
     }
 
     setLoading(true);
-    try {
-      // Endpoint AJAX do FormSubmit
-      const res = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
-      });
+    const payload = {
+      name,
+      email,
+      message,
+      _subject: "Contato via portfólio",
+      _captcha: "false",
+    };
 
-      if (!res.ok) throw new Error("Erro no envio");
-      const json = await res.json();
-      if (json.success === "true") {
+    try {
+      // Envio AJAX em JSON (mais estável na Vercel)
+      const res = await fetch(
+        "https://formsubmit.co/ajax/pedro.passos081@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!res.ok) {
+        // Fallback: submit tradicional se o AJAX falhar
+        form.action = "https://formsubmit.co/pedro.passos081@gmail.com";
+        form.method = "POST";
+
+        // injeta hidden inputs
+        Object.entries(payload).forEach(([k, v]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = k;
+          input.value = v;
+          form.appendChild(input);
+        });
+
+        form.submit();
+        return;
+      }
+
+      const json = await res.json(); // espera { success: "true" } ou similar
+      if (json.success === "true" || json.success) {
         setMsg({ type: "ok", text: "Mensagem enviada com sucesso! 👌" });
         form.reset();
       } else {
-        throw new Error("Resposta inesperada");
+        setMsg({
+          type: "err",
+          text: "Não foi possível enviar. Tente novamente.",
+        });
       }
     } catch {
-      setMsg({
-        type: "err",
-        text: "Não foi possível enviar. Tente novamente.",
-      });
+      setMsg({ type: "err", text: "Erro de rede. Tente novamente." });
     } finally {
       setLoading(false);
     }
@@ -238,18 +264,10 @@ export default function Contact() {
 
         <Wrap>
           {/* FORM */}
-          <GradientBorder data-aos="fade-right" data-aos-duration="1000">
+          <GradientBorder data-aos="fade-right" data-aos-duration="900">
             <Card>
               <Form onSubmit={handleSubmit}>
-                {/* Config extras do FormSubmit */}
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="box" />
-                <input
-                  type="hidden"
-                  name="_subject"
-                  value="Novo contato pelo portfólio"
-                />
-                {/* Honeypot */}
+                {/* Honeypot (não remover) */}
                 <input
                   type="text"
                   name="website"
@@ -301,24 +319,28 @@ export default function Contact() {
             </Card>
           </GradientBorder>
 
-          {/* LINKS */}
+          {/* CARTÕES DE CONTATO */}
           <Cards>
             <GradientBorder data-aos="fade-left" data-aos-duration="900">
               <Card>
                 <ContactItem
-                  href={`mailto:${EMAIL}`}
+                  href="mailto:pedro.passos081@gmail.com"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <h4>E-mail</h4>
-                  <p>{EMAIL}</p>
+                  <p>pedro.passos081@gmail.com</p>
                 </ContactItem>
               </Card>
             </GradientBorder>
 
             <GradientBorder data-aos="fade-left" data-aos-duration="1100">
               <Card>
-                <ContactItem href={LINKEDIN} target="_blank" rel="noreferrer">
+                <ContactItem
+                  href="https://www.linkedin.com/in/pedro-passos081/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <h4>LinkedIn</h4>
                   <p>Pedro Passos</p>
                 </ContactItem>
@@ -327,7 +349,11 @@ export default function Contact() {
 
             <GradientBorder data-aos="fade-left" data-aos-duration="1200">
               <Card>
-                <ContactItem href={GITHUB} target="_blank" rel="noreferrer">
+                <ContactItem
+                  href="https://github.com/PedroPassos081"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <h4>GitHub</h4>
                   <p>PedroPassos081</p>
                 </ContactItem>
