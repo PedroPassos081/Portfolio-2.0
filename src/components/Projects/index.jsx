@@ -4,7 +4,7 @@ import jogoMemoria from "../../assets/images/projeto_jogo_memoria.png";
 import pomodoro from "../../assets/images/projeto_pomodoro.png";
 import artigos from "../../assets/images/projeto_artigos.png";
 import alphafit from "../../assets/images/projeto_alphafit.png";
-import advocacia from "../../assets/images/projeto_advocacia.png";
+import vetdev from "../../assets/images/projeto_vetdev.png";
 
 const Section = styled.section`
   background: ${({ theme }) => theme.colors.panel};
@@ -213,6 +213,14 @@ import { useState } from "react";
 /** Editar projetos aqui */
 const projects = [
   {
+    title: "Vet Dev",
+    img: vetdev,
+    desc: "VetDev é um site fictício de uma clínica/petshop, desenvolvido com Next.js, TypeScript e integrado ao Strapi para gerenciar a área de blog. O projeto foi criado para praticar arquitetura front-end moderna, consumo de CMS headless e boas práticas de desenvolvimento web.",
+    techs: "Next, Typescript, Strapi",
+    code: "https://github.com/PedroPassos081/Portfolio-2.0",
+    demo: "https://vet-dev-two.vercel.app/",
+  },
+  {
     title: "Menu Digital",
     img: menuDigital,
     desc: "Site de menu para restaurante/lanchonete que envia pedidos direto para o WhatsApp.",
@@ -251,14 +259,6 @@ const projects = [
     techs: "HTML5, CSS3",
     code: "https://github.com/PedroPassos081/Alpha-Fit",
     demo: "https://alpha-fit-pedropassos081s-projects.vercel.app/",
-  },
-  {
-    title: "Landing Page Advocacia",
-    img: advocacia,
-    desc: "Landing page baseada em layout feito no Figma por mim.",
-    techs: "Git, HTML5, CSS3",
-    code: "https://github.com/PedroPassos081/site-escritorio-advocacia-",
-    demo: "https://site-escritorio-advocacia.vercel.app/#",
   },
 ];
 function Projects() {
